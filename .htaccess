@@ -1,0 +1,8 @@
+Options +FollowSymlinks
+RewriteEngine on
+
+RewriteCond %{REQUEST_URI} ^/?phpinfo/?$
+RewriteRule ^(.*)$ /phpinfo.php [NC,L]
+
+RewriteCond %{REQUEST_URI} ^/?products/?$
+RewriteRule ^(.*)$ api/product/read.php [NC,L]

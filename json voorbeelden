@@ -1,7 +1,6 @@
 Diagnose(de waardes kunnen geupdate worden)
 ====================================================
-{
-  "diagnose": [
+[
     {
       "led": "false"
     },
@@ -11,14 +10,13 @@ Diagnose(de waardes kunnen geupdate worden)
     {
       "sensor": "false"
     }
-  ]
-}
+]
+
 
 ====================================================
 Log(hier kunnen elementen bij komen)
 ====================================================
-{
-  "log": [
+[
     {
       "log1": "start"
     },
@@ -28,8 +26,8 @@ Log(hier kunnen elementen bij komen)
     {
       "log3": "blokkade"
     }
-  ]
-}
+]
+
 
 ====================================================
 Blokkades(hier kunnen elementen bij komen)

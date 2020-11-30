@@ -31,7 +31,7 @@ if(
 
   
         // set BotAccount property values   
-        $BotRoute->BOT_ID = $data->username;
+        $BotRoute->BOT_ID = $data->ID;
     
     
         // read products will be here

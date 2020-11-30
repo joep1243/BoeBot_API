@@ -9,7 +9,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 // database connection will be here
 // include database and object files
 include_once '../config/db.php';
-include_once '../objects/BotCommand.php';
+include_once '../objects/BotRoute.php';
 include_once '../auth/AuthCheck.php';
   
 // instantiate database and product object
@@ -17,7 +17,7 @@ $database = new Database();
 $db = $database->getConnection();
   
 // initialize object
-$BotCommand = new BotCommand($db);
+$BotRoute = new BotRoute($db);
 
 // get posted data
 $data = json_decode(file_get_contents("php://input"));
@@ -25,37 +25,25 @@ $data = json_decode(file_get_contents("php://input"));
 // make sure data is not empty
 if(
     !empty($data->ID) &&
-    !empty($data->API_code) 
+    !empty($data->API_code) &&
+    !empty($data->blockade) 
 ){
     if(true == AuthCheck($data->API_code)){
 
   
         // set BotAccount property values   
-        $BotCommand->BOT_ID = $data->ID;
+        $BotRoute->BOT_ID = $data->ID;
+        $BotRoute->blockade = $data->blockade;
     
-    
-        // read products will be here
-        // query products
-        $stmt = $BotCommand->getcommand();
-        $num = $stmt->rowCount();
-
-        // check if more than 0 record found
-        if($num>0){
+        if(true == $BotRoute->setblockade()){
         
-            // retrieve our table contents
-            // fetch() is faster than fetchAll()
-            // http://stackoverflow.com/questions/2770630/pdofetchall-vs-pdofetch-in-a-loop
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-
-                $command = $row['command'];
-
-            }
-        
-            // set response code - 200 OK
+             // set response code - 200 OK
             http_response_code(200);
         
-            // show products data in json format
-            echo json_encode($command);
+            // tell the user no products found
+            echo json_encode(
+                array("message" => "true.")
+            );
 
         }else{
         
@@ -64,7 +52,7 @@ if(
         
             // tell the user no products found
             echo json_encode(
-                array("message" => "No command found.")
+                array("message" => "false.")
             );
         }
     }else{

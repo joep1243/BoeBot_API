@@ -13,14 +13,9 @@ class BotLog{
     public $diagnosticsname;
     public $location;
 
-    public $logarray;
-    public $diagnosticsarray;
-    public $locationarray;
-
     // constructor with $db as database connection
     public function __construct($db){
         $this->conn = $db;
-        $this->getarrays();
     }
 
     function getarrays(){
@@ -33,18 +28,20 @@ class BotLog{
         // execute query
         $stmt->execute();
 
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-            $this->log = $row['log'];
-            $this->log = $row['diagnostics'];
-            $this->log = $row['location'];
-        }
+        return $stmt;
     }
 
 
     // update location for bot
     function UpdateLog(){
 
-        $arr = json_decode($this->logarray, TRUE);
+        $getarray = $this->getarrays();
+
+        while ($row = $getarray->fetch(PDO::FETCH_ASSOC)){
+            $log = $row['log'];
+        }
+
+        $arr = json_decode($log, TRUE);
         $newnum = count($arr) + 1;
         $arr[] = ['log'.$newnum.'' => $this->log];
         $json = json_encode($arr);
@@ -74,7 +71,13 @@ class BotLog{
     // update location for bot
     function Updatediagnostics(){
 
-        $arr = json_decode($this->diagnosticsarray, TRUE);  
+        $getarray = $this->getarrays();
+
+        while ($row = $getarray->fetch(PDO::FETCH_ASSOC)){
+            $diagnostics = $row['diagnostics'];
+        }
+
+        $arr = json_decode($diagnostics, TRUE);  
         $arr[][$this->diagnosticsname]=$this->diagnostics;   
         $json = json_encode($arr);
         

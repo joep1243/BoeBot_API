@@ -63,9 +63,9 @@ if(
                     // set response code - 200 OK
                     http_response_code(200);
                         
-                    // show products data in json format
+                    // show api code wit bot id data in json format
                     echo json_encode(
-                        array("API_code" => $API_code)
+                        array("API_code" => $API_code,"ID" => $BotAccount->ID)
                     );
 
                }else{

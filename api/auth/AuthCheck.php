@@ -1,5 +1,4 @@
 <?php
-
 function AuthCheck($API_code){
 
     $database = new Database();

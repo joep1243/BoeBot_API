@@ -1,4 +1,30 @@
 Options +FollowSymlinks
+
+
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^([^\.]+)$ $1.php [NC,L]
+
+
+<files AuthCheck.php>
+	Order allow,deny
+	Deny from all
+</files>
+
+
+<files db.php>
+	Order allow,deny
+	Deny from all
+</files>
+
+
+# secure .htaccess file
+<Files .htaccess>
+	Order allow,deny
+	Deny from all
+</Files>
+
+
+# prevent folder listing
+# IndexIgnore *
+

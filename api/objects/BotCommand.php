@@ -8,7 +8,7 @@ class BotCommand{
     // object properties
     public $ID;
     public $BOT_ID;
-    public $API_code;
+    public $command;
 
   
     // constructor with $db as database connection
@@ -29,6 +29,26 @@ class BotCommand{
         $stmt->execute();
     
         return $stmt;
+    }
+ 
+    // update location for bot
+    function UpdateCommand(){
+    
+        // select all query
+        $query = "UPDATE " . $this->table_name . " SET command=:command  WHERE BOT_ID=:BOT_ID";
+    
+        // prepare query
+        $stmt = $this->conn->prepare($query);
+    
+        // sanitize
+        $this->command=htmlspecialchars(strip_tags($this->command));
+        $this->botid=htmlspecialchars(strip_tags($this->botid));
+    
+        // bind values
+        $stmt->bindParam(":command", $this->command);
+        $stmt->bindParam(":BOT_ID", $this->botid);
+
+        $stmt->execute();
     }
 }
 ?>
